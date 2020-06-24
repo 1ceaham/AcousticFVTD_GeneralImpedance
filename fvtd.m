@@ -42,10 +42,10 @@ function vP = fvtd(T,h,S,V,conn,Ljlm,Rjlm,Cjlm,vP,varargin)
 %   'noProgress': Disable the display of progress and the total time taken.
 %
 %   REFERENCES
-%   [1] S. Bilbao, B. Hamilton, J. Botts, and L. Savioja, ìFinite Volume
+%   [1] S. Bilbao, B. Hamilton, J. Botts, and L. Savioja, ‚ÄúFinite Volume
 %       Time Domain Room Acoustics Simulation under General Impedance
-%       Boundary Conditions,î IEEE/ACM Transactions on Audio, Speech, and
-%       Language Processing, vol. 24, no. 1, pp. 161ñ173, Jan. 2016, doi:
+%       Boundary Conditions,‚Äù IEEE/ACM Transactions on Audio, Speech, and
+%       Language Processing, vol. 24, no. 1, pp. 161‚Äì173, Jan. 2016, doi:
 %       10.1109/TASLP.2015.2500018.
 %
 
@@ -60,6 +60,7 @@ c = 340;
 rho = 1.21;
 
 nEl = size(conn,1);
+nFaces = size(conn,2);
 M = size(Ljlm, 3);
 
 %% Stability
@@ -123,7 +124,7 @@ bValue = zeros(size(gMask)); % Intermediate computation for vP update
 % elementwise matrix operations and then sum across the proper dimensions
 % in order to recover the desired value.
 
-interRowMask = repmat((1:nEl).',1,6); % Each node referring to itself
+interRowMask = repmat((1:nEl).',1,nFaces); % Each node referring to itself
 interSubtractionIdx = conn + interRowMask.*gamma; % Replace empty sides with reference to self
 
 % Thus, the one row of the sum of a node's neighbors' velocity potential
